@@ -1,0 +1,63 @@
+export const schema = {
+  post: {
+    body: {
+      type: "object",
+      properties: {
+        material_name: { type: "string", minLength: 3 },
+        specification: { type: "string", minLength: 3 },
+        project_id: { type: "string", format: "uuid" },
+        uom: { type: "string", format: "uuid" },
+        category: { type: "string", format: "uuid" },
+        item_code: { type: "string", minLength: 1 },
+        in_stock_quantity: { type: "number", minimum: 0 },
+        min_stock_quantity: { type: "number", minimum: 0 },
+        unit_price: { type: "number", minimum: 0 },
+        hsn_code: { type: "string", minLength: 1 },
+        brand_name: { type: "string", minLength: 1 },
+        length: { type: "string", minLength: 1 },
+        breadth: { type: "string", minLength: 1 },
+        diameter: { type: "string", minLength: 1 },
+        height: { type: "string", minLength: 1 },
+        weight: { type: "string", minLength: 1 },
+        color: { type: "string", minLength: 1 },
+      },
+      required: ["material_name", "project_id", "uom"],
+    },
+  },
+  put: {
+    params: {
+      type: "object",
+      properties: { id: { type: "string", format: "uuid" } },
+      required: ["id"],
+    },
+    body: {
+      type: "object",
+      properties: {
+        material_name: { type: "string", minLength: 3 },
+        specification: { type: "string", minLength: 3 },
+        project_id: { type: "string", format: "uuid" },
+        uom: { type: "string", format: "uuid" },
+        category: { type: "string", format: "uuid" },
+        item_code: { type: "string", minLength: 1 },
+        in_stock_quantity: { type: "number", minimum: 0 },
+        min_stock_quantity: { type: "number", minimum: 0 },
+        unit_price: { type: "number", minimum: 0 },
+        hsn_code: { type: "string", minLength: 1 },
+        brand_name: { type: "string", minLength: 1 },
+        length: { type: "string", minLength: 1 },
+        breadth: { type: "string", minLength: 1 },
+        diameter: { type: "string", minLength: 1 },
+        height: { type: "string", minLength: 1 },
+        weight: { type: "string", minLength: 1 },
+        color: { type: "string", minLength: 1 },
+      },
+    },
+  },
+  checkParam: {
+    params: {
+      type: "object",
+      properties: { id: { type: "string", format: "uuid" } },
+      required: ["id"],
+    },
+  },
+};
