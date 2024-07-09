@@ -1,6 +1,6 @@
 "use strict";
 import constants from "../../lib/constants/index.js";
-import sequelizeFwk from "sequelize";
+import sequelizeFwk, { QueryTypes } from "sequelize";
 
 const { DataTypes, Deferrable } = sequelizeFwk;
 
@@ -17,7 +17,7 @@ const init = async (sequelize) => {
       },
       is_pending: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        defaultValue: true,
       },
       mobile_number: {
         type: DataTypes.STRING,
@@ -66,17 +66,20 @@ const init = async (sequelize) => {
 };
 
 const create = async (req) => {
-  return await ProjectTeamModel.create(
+  const project = await ProjectTeamModel.create(
     {
       mobile_number: req.body.mobile_number,
       fullname: req.body.fullname,
       project_id: req.body.project_id,
+      is_admin: req.body.is_admin,
     },
     {
       returning: true,
       raw: true,
     }
   );
+
+  return project.dataValues;
 };
 
 const update = async (req) => {
@@ -106,11 +109,49 @@ const getById = async (req, id) => {
 };
 
 const getByProjectId = async (req, id) => {
-  return await ProjectTeamModel.findAll({
-    where: { project_id: req.params.id || id },
-    returning: true,
+  // id, is_pending, mobile_number, fullname, user_id, project_id, is_admin;
+  let query = `
+  SELECT
+    json_agg(
+      CASE
+        WHEN usr.id IS NOT NULL THEN 
+          json_build_object(
+            'id', usr.id,
+            'is_pending', false,
+            'mobile_number', usr.mobile_number,
+            'fullname', usr.fullname,
+            'project_id', pt.project_id,
+            'is_admin', pt.is_admin,
+            'created_at', pt.created_at,
+            'updated_at', pt.updated_at
+          )
+        ELSE 
+          json_build_object(
+            'id', pt.id,
+            'is_pending', true,
+            'mobile_number', pt.mobile_number,
+            'fullname', pt.fullname,
+            'project_id', pt.project_id,
+            'is_admin', pt.is_admin,
+            'created_at', pt.created_at,
+            'updated_at', pt.updated_at
+          )
+      END
+    ) as results
+    FROM ${constants.models.PROJECT_TEAM_TABLE} pt
+    LEFT JOIN ${
+      constants.models.USER_TABLE
+    } usr ON usr.mobile_number = pt.mobile_number
+    LEFT JOIN ${constants.models.PROJECT_TABLE} prj ON prj.id = pt.project_id
+    WHERE pt.project_id = '${req.params.id || id}'
+  `;
+
+  const data = await ProjectTeamModel.sequelize.query(query, {
+    type: QueryTypes.SELECT,
     raw: true,
   });
+
+  return data[0].results;
 };
 
 export default {

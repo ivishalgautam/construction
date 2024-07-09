@@ -83,7 +83,7 @@ const create = async (req, res) => {
     return ErrorHandler({ message: error.message });
   });
 
-  res.send({ message: "Items added." });
+  res.send({ status: true, message: "Items added." });
 };
 
 const update = async (req, res) => {
@@ -114,7 +114,7 @@ const update = async (req, res) => {
     })
     .catch((error) => ErrorHandler({ message: error.message }));
 
-  res.send({ message: "Updated" });
+  res.send({ status: true, message: "Updated" });
 };
 
 export default {

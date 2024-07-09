@@ -63,7 +63,7 @@ exceed the total work amount of the task. */
     }
 
     await table.TaskModel.update(req, req.body.task_id);
-    res.send(timeline);
+    res.send({ status: true, data: timeline });
   } else {
     return ErrorHandler({
       code: INTERNAL_SERVER_ERROR,
@@ -116,7 +116,7 @@ deleting a task timeline entry. */
     },
   });
 
-  res.send(timelineRecord);
+  res.send({ status: true, data: timelineRecord });
 };
 
 const getByTaskId = async (req, res) => {
@@ -125,7 +125,10 @@ const getByTaskId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(await table.TaskTimelineModel.getByTaskId(req));
+  res.send({
+    status: true,
+    data: await table.TaskTimelineModel.getByTaskId(req),
+  });
 };
 
 export default {

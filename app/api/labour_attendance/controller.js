@@ -17,7 +17,10 @@ const create = async (req, res) => {
   if (!projectRecord)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.LabourAttendanceModel.create(req));
+  res.send({
+    status: true,
+    data: await table.LabourAttendanceModel.create(req),
+  });
 };
 
 const update = async (req, res) => {
@@ -28,7 +31,10 @@ const update = async (req, res) => {
       message: "Labour attendance not found!",
     });
 
-  res.send(await table.LabourAttendanceModel.update(req));
+  res.send({
+    status: true,
+    data: await table.LabourAttendanceModel.update(req),
+  });
 };
 
 const getById = async (req, res) => {
@@ -39,7 +45,7 @@ const getById = async (req, res) => {
       message: "Labour attendance not found!",
     });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByProjectAndDate = async (req, res) => {
@@ -50,7 +56,10 @@ const getByProjectAndDate = async (req, res) => {
       message: "Project not found!",
     });
 
-  res.send(await table.LabourAttendanceModel.getByProjectAndDate(req));
+  res.send({
+    status: true,
+    data: await table.LabourAttendanceModel.getByProjectAndDate(req),
+  });
 };
 
 export default {

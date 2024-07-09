@@ -60,19 +60,15 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
+  console.log(req.body);
   try {
-    console.log(req.body);
     const record = await table.UserModel.getById(req);
     if (!record) {
       return res.code(404).send({ status: false, message: "User not exists" });
     }
 
-    const user = await table.UserModel.update(req);
+    await table.UserModel.update(req);
 
-    if (user && req.body.password) {
-      req.body.new_password = req.body.password;
-      await table.UserModel.updatePassword(req, req.user_data.id);
-    }
     return res.send({ status: true, message: "Updated" });
   } catch (error) {
     console.error(error);

@@ -23,6 +23,7 @@ import issuedItemModel from "./models/issued-item.model.js";
 import receivedItemModel from "./models/received-item.model.js";
 import grnSequenceModel from "./models/grn-sequence.model.js";
 import grnModel from "./models/grn.model.js";
+import inviteModel from "./models/invite.model.js";
 
 export default {
   UserModel: userModel,
@@ -49,4 +50,5 @@ export default {
   ReceivedItemModel: receivedItemModel,
   GrnSequenceModel: grnSequenceModel,
   GrnModel: grnModel,
+  InviteModel: inviteModel,
 };

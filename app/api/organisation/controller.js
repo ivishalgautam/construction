@@ -3,70 +3,31 @@
 import table from "../../db/models.js";
 
 const create = async (req, res) => {
-  try {
-    const record = await table.UserModel.getById(req, req.user_data.id);
-
-    if (!record) return res.code(404).send({ message: "user not found!" });
-
-    await table.OrganisationModel.create(req);
-    res.send({ message: "created" });
-  } catch (error) {
-    console.error(error);
-    res.code(500).send({ message: error.message, error });
-  }
+  await table.OrganisationModel.create(req);
+  res.send({ status: true, message: "created" });
 };
 
 const update = async (req, res) => {
-  try {
-    const record = await table.UserModel.getById(req, req.user_data.id);
-
-    if (!record) return res.code(404).send({ message: "user not found!" });
-
-    await table.OrganisationModel.update(req);
-    res.send({ message: "updated" });
-  } catch (error) {
-    console.error(error);
-    res.code(500).send({ message: error.message, error });
-  }
+  await table.OrganisationModel.update(req);
+  res.send({ status: true, message: "updated" });
 };
 
 const getById = async (req, res) => {
-  try {
-    const record = await table.UserModel.getById(req, req.user_data.id);
-
-    if (!record) return res.code(404).send({ message: "user not found!" });
-
-    res.send(await table.OrganisationModel.getById(req));
-  } catch (error) {
-    console.error(error);
-    res.code(500).send({ message: error.message, error });
-  }
+  res.send({
+    status: true,
+    data: await table.OrganisationModel.getById(req),
+  });
 };
 
 const deleteById = async (req, res) => {
-  try {
-    const record = await table.UserModel.getById(req, req.user_data.id);
-
-    if (!record) return res.code(404).send({ message: "user not found!" });
-
-    res.send(await table.OrganisationModel.deleteById(req));
-  } catch (error) {
-    console.error(error);
-    res.code(500).send({ message: error.message, error });
-  }
+  res.send({
+    status: true,
+    data: await table.OrganisationModel.deleteById(req),
+  });
 };
 
 const get = async (req, res) => {
-  try {
-    const record = await table.UserModel.getById(req, req.user_data.id);
-
-    if (!record) return res.code(404).send({ message: "user not found!" });
-
-    res.send(await table.OrganisationModel.get(req));
-  } catch (error) {
-    console.error(error);
-    res.code(500).send({ message: error.message, error });
-  }
+  res.send(await table.OrganisationModel.get(req));
 };
 
 export default {

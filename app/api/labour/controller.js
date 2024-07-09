@@ -14,7 +14,7 @@ const update = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Labour not found!" });
 
-  res.send(await table.LabourModel.update(req));
+  res.send({ status: true, data: await table.LabourModel.update(req) });
 };
 
 const getById = async (req, res) => {
@@ -22,7 +22,7 @@ const getById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Labour not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByProjectId = async (req, res) => {
@@ -30,7 +30,7 @@ const getByProjectId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.LabourModel.getByProjectId(req));
+  res.send({ status: true, data: await table.LabourModel.getByProjectId(req) });
 };
 
 const deleteById = async (req, res) => {
@@ -38,11 +38,11 @@ const deleteById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Labour not found!" });
 
-  res.send(await table.LabourModel.deleteById(req));
+  res.send({ status: true, data: await table.LabourModel.deleteById(req) });
 };
 
 const get = async (req, res) => {
-  res.send(await table.LabourModel.get(req));
+  res.send({ status: true, data: await table.LabourModel.get(req) });
 };
 
 export default {

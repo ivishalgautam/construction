@@ -10,7 +10,7 @@ const getByProjectId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.GrnModel.getByProjectId(req));
+  res.send({ status: true, data: await table.GrnModel.getByProjectId(req) });
 };
 
 export default {

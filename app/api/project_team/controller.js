@@ -10,7 +10,16 @@ const create = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.ProjectTeamModel.create(req));
+  const newMember = await table.ProjectTeamModel.create(req);
+
+  if (newMember) {
+    await table.InviteModel.create({
+      invite_by: req.user_data.id,
+      invite_to_mobile_number: newMember.mobile_number,
+    });
+  }
+
+  res.send({ status: true, data: newMember });
 };
 
 const update = async (req, res) => {
@@ -24,7 +33,10 @@ const getByProjectId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.ProjectTeamModel.getByProjectId(req));
+  res.send({
+    status: true,
+    data: await table.ProjectTeamModel.getByProjectId(req),
+  });
 };
 
 const deleteById = async (req, res) => {
@@ -32,7 +44,10 @@ const deleteById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Team member not found!" });
 
-  res.send(await table.ProjectTeamModel.deleteById(req));
+  res.send({
+    status: true,
+    data: await table.ProjectTeamModel.deleteById(req),
+  });
 };
 
 export default {

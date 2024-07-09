@@ -18,21 +18,27 @@ const getById = async (req, res) => {
   const record = await table.MaterialCategoryModel.getById(req);
   if (!record) return ErrorHandler({ code: NOT_FOUND, message: "Not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const deleteById = async (req, res) => {
   const record = await table.MaterialCategoryModel.get(req);
   if (!record) return ErrorHandler({ code: NOT_FOUND, message: "Not found!" });
 
-  res.send(await table.MaterialCategoryModel.deleteById(req));
+  res.send({
+    status: true,
+    data: await table.MaterialCategoryModel.deleteById(req),
+  });
 };
 
 const update = async (req, res) => {
   const record = await table.MaterialCategoryModel.get(req);
   if (!record) return ErrorHandler({ code: NOT_FOUND, message: "Not found!" });
 
-  res.send(await table.MaterialCategoryModel.update(req));
+  res.send({
+    status: true,
+    data: await table.MaterialCategoryModel.update(req),
+  });
 };
 
 export default {

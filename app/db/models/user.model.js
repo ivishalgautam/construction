@@ -20,6 +20,7 @@ const init = async (sequelize) => {
       fullname: {
         type: sequelizeFwk.DataTypes.STRING,
         allowNull: true,
+        defaultValue: "",
       },
       mobile_number: {
         type: sequelizeFwk.DataTypes.STRING,
@@ -33,36 +34,26 @@ const init = async (sequelize) => {
       email: {
         type: sequelizeFwk.DataTypes.STRING,
         allowNull: true,
+        defaultValue: "",
       },
       designation: {
         type: sequelizeFwk.DataTypes.STRING,
         allowNull: true,
+        defaultValue: "",
       },
       average_project_budget_in_company: {
         type: sequelizeFwk.DataTypes.STRING,
         allowNull: true,
+        defaultValue: "",
       },
       company_type: {
-        type: sequelizeFwk.DataTypes.ENUM([
-          "others",
-          "general_contractor",
-          "sub_contractor",
-          "developer/builder",
-          "project_management_consultancy",
-          "",
-        ]),
-        // defaultValue: "",
+        type: sequelizeFwk.DataTypes.STRING,
+        defaultValue: "",
         allowNull: true,
       },
       business_industry: {
-        type: sequelizeFwk.DataTypes.ENUM([
-          "agriculture",
-          "construction",
-          "education",
-          "others",
-          "",
-        ]),
-        // defaultValue: "",
+        type: sequelizeFwk.DataTypes.STRING,
+        defaultValue: "",
         allowNull: true,
       },
       is_active: {

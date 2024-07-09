@@ -58,7 +58,7 @@ const create = async (req, res) => {
     await Promise.all(issuedItems);
   }
 
-  res.send(siteTransfer);
+  res.send({ status: true, data: siteTransfer });
 };
 
 const update = async (req, res) => {
@@ -69,7 +69,7 @@ const update = async (req, res) => {
       message: "Site transfer not found!",
     });
 
-  res.send(await table.SiteTransferModel.update(req));
+  res.send({ status: true, data: await table.SiteTransferModel.update(req) });
 };
 
 const deleteById = async (req, res) => {
@@ -80,7 +80,10 @@ const deleteById = async (req, res) => {
       message: "Site transfer not found!",
     });
 
-  res.send(await table.SiteTransferModel.deleteById(req));
+  res.send({
+    status: true,
+    data: await table.SiteTransferModel.deleteById(req),
+  });
 };
 
 const getById = async (req, res) => {
@@ -91,7 +94,7 @@ const getById = async (req, res) => {
       message: "Site transfer not found!",
     });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByProjectId = async (req, res) => {
@@ -102,7 +105,10 @@ const getByProjectId = async (req, res) => {
       message: "Project not found!",
     });
 
-  res.send(await table.SiteTransferModel.getByProjectId(req));
+  res.send({
+    status: true,
+    data: await table.SiteTransferModel.getByProjectId(req),
+  });
 };
 
 export default {

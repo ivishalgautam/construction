@@ -14,21 +14,21 @@ const update = async (req, res) => {
   const record = await table.TaskModel.getById(req);
   if (!record) ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(await table.TaskModel.update(req));
+  res.send({ status: true, data: await table.TaskModel.update(req) });
 };
 
 const getById = async (req, res) => {
   const record = await table.TaskModel.getById(req);
   if (!record) ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByProjectId = async (req, res) => {
   const record = await table.ProjectModel.getById(req);
   if (!record) ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(await table.TaskModel.getByProjectId(req));
+  res.send({ status: true, data: await table.TaskModel.getByProjectId(req) });
 };
 
 const deleteById = async (req, res) => {
@@ -37,11 +37,11 @@ const deleteById = async (req, res) => {
 
   await table.TaskModel.deleteById(req);
 
-  res.send({ message: "Task deleted." });
+  res.send({ status: true, message: "Task deleted." });
 };
 
 const get = async (req, res) => {
-  res.send(await table.TaskModel.get(req));
+  res.send({ status: true, data: await table.TaskModel.get(req) });
 };
 
 export default {

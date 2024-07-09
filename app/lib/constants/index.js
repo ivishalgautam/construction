@@ -54,6 +54,7 @@ const constants = {
     TASK_COMMENT_TABLE: "task_comments",
     TASK_ATTACHMENT_TABLE: "task_attachments",
     PROJECT_TEAM_TABLE: "project_teams",
+    INVITES_TABLE: "invites",
     MATERIAL_UOM_TABLE: "material_uoms",
     MATERIAL_CATEGORY_TABLE: "material_categories",
     MATERIAL_TABLE: "materials",
@@ -72,8 +73,8 @@ const constants = {
   },
   time: {
     // TOKEN_EXPIRES_IN: 15 * 6000000, // 15 * 1 minute = 15 minutes
-    TOKEN_EXPIRES_IN: 365 * 24 * 60 * 60 * 1000,
-    REFRESH_TOKEN_EXPIRES_IN: 365 * 24 * 60 * 60 * 1000, // 1 day
+    TOKEN_EXPIRES_IN: 30 * 365 * 24 * 60 * 60 * 1000,
+    REFRESH_TOKEN_EXPIRES_IN: 365 * 24 * 60 * 60 * 1000,
   },
 };
 

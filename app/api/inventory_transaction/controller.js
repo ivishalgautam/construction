@@ -36,7 +36,7 @@ const create = async (req, res) => {
     });
   }
 
-  res.send(newTran);
+  res.send({ status: true, data: newTran });
 };
 
 const deleteById = async (req, res) => {
@@ -70,7 +70,7 @@ const deleteById = async (req, res) => {
     });
   }
 
-  res.send({ message: "Transaction deleted." });
+  res.send({ status: true, message: "Transaction deleted." });
 };
 
 const getByMaterialId = async (req, res) => {
@@ -78,7 +78,10 @@ const getByMaterialId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Material not found!" });
 
-  res.send(await table.InventoryTransactionModel.getByMaterialId(req));
+  res.send({
+    status: true,
+    data: await table.InventoryTransactionModel.getByMaterialId(req),
+  });
 };
 
 export default {

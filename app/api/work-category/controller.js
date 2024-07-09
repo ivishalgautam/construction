@@ -8,7 +8,7 @@ const { INTERNAL_SERVER_ERROR, NOT_FOUND } = constants.http.status;
 
 const create = async (req, res) => {
   try {
-    res.send(await table.WorkCategoryModel.create(req));
+    res.send({ status: true, data: await table.WorkCategoryModel.create(req) });
   } catch (error) {
     ErrorHandler({ code: error.statusCode, message: error.message });
   }
@@ -19,7 +19,7 @@ const update = async (req, res) => {
     const record = await table.WorkCategoryModel.getById(req);
     if (!record) return res.code(NOT_FOUND).send({ message: "not found!" });
 
-    res.send(await table.WorkCategoryModel.update(req));
+    res.send({ status: true, data: await table.WorkCategoryModel.update(req) });
   } catch (error) {
     ErrorHandler({ code: error.statusCode, message: error.message });
   }
@@ -31,7 +31,7 @@ const deleteById = async (req, res) => {
     if (!record) return res.code(NOT_FOUND).send({ message: "not found!" });
 
     await table.WorkCategoryModel.deleteById(req);
-    res.send({ message: "Deleted" });
+    res.send({ status: true, message: "Deleted" });
   } catch (error) {
     ErrorHandler({ code: error.statusCode, message: error.message });
   }
@@ -42,7 +42,7 @@ const getById = async (req, res) => {
     const record = await table.WorkCategoryModel.getById(req);
     if (!record) return res.code(NOT_FOUND).send({ message: "not found!" });
 
-    res.send(record);
+    res.send({ status: true, data: record });
   } catch (error) {
     ErrorHandler({ code: error.statusCode, message: error.message });
   }
@@ -50,7 +50,7 @@ const getById = async (req, res) => {
 
 const get = async (req, res) => {
   try {
-    res.send(await table.WorkCategoryModel.get(req));
+    res.send({ status: true, data: await table.WorkCategoryModel.get(req) });
   } catch (error) {
     ErrorHandler({ code: error.statusCode, message: error.message });
   }

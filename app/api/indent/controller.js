@@ -26,7 +26,7 @@ const create = async (req, res) => {
     );
   }
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const update = async (req, res) => {
@@ -34,7 +34,7 @@ const update = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Indent not found!" });
 
-  res.send(await table.IndentModel.update(req));
+  res.send({ status: true, data: await table.IndentModel.update(req) });
 };
 
 const getByProjectId = async (req, res) => {
@@ -42,11 +42,11 @@ const getByProjectId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.IndentModel.getByProjectId(req));
+  res.send({ status: true, data: await table.IndentModel.getByProjectId(req) });
 };
 
 const get = async (req, res) => {
-  res.send(await table.IndentModel.get(req));
+  res.send({ status: true, data: await table.IndentModel.get(req) });
 };
 
 const getById = async (req, res) => {
@@ -54,7 +54,7 @@ const getById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Indent not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const deleteById = async (req, res) => {
@@ -62,7 +62,7 @@ const deleteById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Indent not found!" });
 
-  res.send(await table.IndentModel.deleteById(req));
+  res.send({ status: true, data: await table.IndentModel.deleteById(req) });
 };
 
 export default {

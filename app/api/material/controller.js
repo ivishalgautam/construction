@@ -22,7 +22,7 @@ const create = async (req, res) => {
     });
   }
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const update = async (req, res) => {
@@ -30,7 +30,7 @@ const update = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Material not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const deleteById = async (req, res) => {
@@ -38,7 +38,7 @@ const deleteById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Material not found!" });
 
-  res.send(await table.MaterialModel.deleteById(req));
+  res.send({ status: true, data: await table.MaterialModel.deleteById(req) });
 };
 
 const getById = async (req, res) => {
@@ -46,7 +46,7 @@ const getById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Material not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByProjectId = async (req, res) => {
@@ -54,11 +54,14 @@ const getByProjectId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
 
-  res.send(await table.MaterialModel.getByProjectId(req));
+  res.send({
+    status: true,
+    data: await table.MaterialModel.getByProjectId(req),
+  });
 };
 
 const get = async (req, res) => {
-  res.send(await table.MaterialModel.get(req));
+  res.send({ status: true, data: await table.MaterialModel.get(req) });
 };
 
 export default {

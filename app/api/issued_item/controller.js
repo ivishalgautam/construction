@@ -24,7 +24,7 @@ const create = async (req, res) => {
       message: "Site transfer not found!",
     });
 
-  res.send(await table.IssuedItemModel.create(req));
+  res.send({ status: true, data: await table.IssuedItemModel.create(req) });
 };
 
 const getBySiteTransferId = async (req, res) => {
@@ -35,7 +35,10 @@ const getBySiteTransferId = async (req, res) => {
       message: "Site transfer not found!",
     });
 
-  res.send(await table.IssuedItemModel.getBySiteTransferId(req));
+  res.send({
+    status: true,
+    data: await table.IssuedItemModel.getBySiteTransferId(req),
+  });
 };
 
 export default {

@@ -2,6 +2,7 @@
 
 import controller from "./controller.js";
 import jwtVerify from "../../helpers/auth.js";
+import { schema } from "./schema.js";
 
 export default async function routes(fastify, options) {
   fastify.addHook("onRequest", jwtVerify.verifyToken);

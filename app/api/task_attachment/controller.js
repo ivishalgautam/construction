@@ -19,7 +19,7 @@ const getById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Attachment not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByTaskId = async (req, res) => {
@@ -27,7 +27,10 @@ const getByTaskId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(await table.TaskAttachmentModel.getByTaskId(req));
+  res.send({
+    status: true,
+    data: await table.TaskAttachmentModel.getByTaskId(req),
+  });
 };
 
 const deleteById = async (req, res) => {
@@ -39,7 +42,7 @@ const deleteById = async (req, res) => {
   if (deletionSuccess) {
     req.query.file_path = record.file;
     fileController.deleteFile(req);
-    res.send({ message: "file deleted" });
+    res.send({ status: true, message: "file deleted" });
   } else {
     return ErrorHandler({
       code: INTERNAL_SERVER_ERROR,

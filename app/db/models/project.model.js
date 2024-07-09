@@ -56,6 +56,10 @@ const init = async (sequelize) => {
           isDate: true,
         },
       },
+      status: {
+        type: DataTypes.ENUM("active", "on_hold", "completed"),
+        defaultValue: "active",
+      },
     },
     {
       createdAt: "created_at",
@@ -67,11 +71,16 @@ const init = async (sequelize) => {
 };
 
 const create = async (req) => {
-  return await ProjectModel.create({
-    project_name: req.body?.project_name,
-    user_id: req.user_data?.id,
-    organisation_id: req.body?.organisation_id,
-  });
+  const project = await ProjectModel.create(
+    {
+      project_name: req.body?.project_name,
+      user_id: req.user_data?.id,
+      organisation_id: req.body?.organisation_id,
+    },
+    { plain: true }
+  );
+
+  return project.dataValues;
 };
 
 const update = async (req, id) => {
@@ -82,6 +91,7 @@ const update = async (req, id) => {
       organisation_id: req.body?.organisation_id,
       start_date: req.body?.start_date,
       end_date: req.body?.end_date,
+      status: req.body.status,
     },
     {
       where: {

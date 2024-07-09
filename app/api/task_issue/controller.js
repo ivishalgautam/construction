@@ -11,7 +11,7 @@ const create = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(await table.TaskIssueModel.create(req));
+  res.send({ status: true, data: await table.TaskIssueModel.create(req) });
 };
 
 const update = async (req, res) => {
@@ -20,7 +20,7 @@ const update = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task issue not found!" });
 
-  res.send(await table.TaskIssueModel.update(req));
+  res.send({ status: true, data: await table.TaskIssueModel.update(req) });
 };
 
 const getById = async (req, res) => {
@@ -29,7 +29,7 @@ const getById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task issue not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const getByTaskId = async (req, res) => {
@@ -38,7 +38,7 @@ const getByTaskId = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task not found!" });
 
-  res.send(record);
+  res.send({ status: true, data: record });
 };
 
 const deleteById = async (req, res) => {
@@ -47,11 +47,11 @@ const deleteById = async (req, res) => {
   if (!record)
     return ErrorHandler({ code: NOT_FOUND, message: "Task issue not found!" });
 
-  res.send(await table.TaskIssueModel.deleteById(req));
+  res.send({ status: true, data: await table.TaskIssueModel.deleteById(req) });
 };
 
 const get = async (req, res) => {
-  res.send(await table.TaskIssueModel.get(req));
+  res.send({ status: true, data: await table.TaskIssueModel.get(req) });
 };
 
 export default {
