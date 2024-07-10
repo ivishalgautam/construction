@@ -58,11 +58,11 @@ const create = async ({ invite_by, invite_to_mobile_number }) => {
 const getByInviteBy = async (id) => {
   let query = `
     SELECT
-        usr.user_id,
+        usr.id,
         usr.mobile_number,
         usr.fullname
       FROM ${constants.models.INVITES_TABLE} invt
-      LEFT JOIN ${constants.models.USER_TABLE} usr ON usr.mobile_number = invt.invite_to_mobile_number
+      RIGHT JOIN ${constants.models.USER_TABLE} usr ON usr.mobile_number = invt.invite_to_mobile_number
       WHERE invt.invite_by = '${id}'
 `;
 

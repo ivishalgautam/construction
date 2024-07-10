@@ -6,6 +6,23 @@ import constants from "../../lib/constants/index.js";
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = constants.http.status;
 
 const create = async (req, res) => {
+  const projectRecord = await table.ProjectModel.getById(
+    null,
+    req.body.project_id
+  );
+  if (!projectRecord)
+    return ErrorHandler({ code: NOT_FOUND, message: "Project not found!" });
+
+  const workCategoryRecord = await table.WorkCategoryModel.getById(
+    null,
+    req.body.work_category_id
+  );
+  if (!workCategoryRecord)
+    return ErrorHandler({
+      code: NOT_FOUND,
+      message: "Work category not found!",
+    });
+
   const record = await table.TaskModel.create(req);
   res.send(record);
 };

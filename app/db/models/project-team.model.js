@@ -82,6 +82,10 @@ const create = async (req) => {
   return project.dataValues;
 };
 
+const bulkCreate = async (data) => {
+  return await ProjectTeamModel.bulkCreate(data);
+};
+
 const update = async (req) => {
   return await ProjectTeamModel.update(
     {
@@ -151,12 +155,15 @@ const getByProjectId = async (req, id) => {
     raw: true,
   });
 
+  console.log({ data });
+
   return data[0].results;
 };
 
 export default {
   init: init,
   create: create,
+  bulkCreate: bulkCreate,
   update: update,
   deleteById: deleteById,
   getById: getById,

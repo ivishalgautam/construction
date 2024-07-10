@@ -138,6 +138,10 @@ const create = async (req) => {
   });
 };
 
+const bulkCreate = async (data) => {
+  return await TaskModel.bulkCreate(data);
+};
+
 const update = async (req, id) => {
   const [rowCount, rows] = await TaskModel.update(
     {
@@ -179,7 +183,7 @@ const getById = async (req, id) => {
 
 const getByProjectId = async (req, id) => {
   return await TaskModel.findAll({
-    where: { project_id: req.params.id || id },
+    where: { project_id: req?.params?.id || id },
     raw: true,
   });
 };
@@ -191,6 +195,7 @@ const get = async (req) => {
 export default {
   init: init,
   create: create,
+  bulkCreate: bulkCreate,
   update: update,
   deleteById: deleteById,
   getById: getById,

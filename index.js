@@ -3,20 +3,20 @@ import server from "./server.js";
 import fastify from "fastify";
 import fastifyRequestLogger from "@mgcrea/fastify-request-logger";
 
-// const app = fastify({
-//   logger: {
-//     level: "debug",
-//     transport: {
-//       target: "@mgcrea/pino-pretty-compact",
-//       options: {
-//         translateTime: "HH:MM:ss Z",
-//         ignore: "pid,hostname",
-//       },
-//     },
-//   },
-// });
+const app = fastify({
+  logger: {
+    level: "debug",
+    transport: {
+      target: "@mgcrea/pino-pretty-compact",
+      options: {
+        translateTime: "HH:MM:ss Z",
+        ignore: "pid,hostname",
+      },
+    },
+  },
+});
 
-const app = fastify({ logger: true });
+// const app = fastify({ logger: true });
 
 app.register(fastifyRequestLogger);
 

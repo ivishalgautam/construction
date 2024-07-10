@@ -57,8 +57,12 @@ const init = async (sequelize) => {
         },
       },
       status: {
-        type: DataTypes.ENUM("active", "on_hold", "completed"),
+        type: DataTypes.ENUM("active", "on hold", "completed"),
         defaultValue: "active",
+      },
+      image: {
+        type: DataTypes.TEXT,
+        defaultValue: "",
       },
     },
     {
@@ -76,6 +80,7 @@ const create = async (req) => {
       project_name: req.body?.project_name,
       user_id: req.user_data?.id,
       organisation_id: req.body?.organisation_id,
+      image: req.body?.image,
     },
     { plain: true }
   );
@@ -92,6 +97,7 @@ const update = async (req, id) => {
       start_date: req.body?.start_date,
       end_date: req.body?.end_date,
       status: req.body.status,
+      image: req.body.image,
     },
     {
       where: {
@@ -107,14 +113,22 @@ const get = async (req) => {
   let whereQuery = "";
 
   if (req.user_data.role === "user") {
-    whereQuery = `WHERE user_id = '${req.user_data.id}'`;
+    whereQuery = `WHERE prj.user_id = '${req.user_data.id}'`;
   }
 
   let query = `
-      SELECT
-          *
-        FROM projects
-        ${whereQuery}
+  SELECT
+      prj.*,
+      org.organisation_name,
+      COUNT(tsk.progress)::float as progress
+    FROM projects prj
+    LEFT JOIN ${constants.models.ORGANISATION_TABLE} org ON org.id = prj.organisation_id
+    LEFT JOIN ${constants.models.TASK_TABLE} tsk ON tsk.project_id = prj.id
+      ${whereQuery}
+    GROUP BY
+      prj.id,
+      org.organisation_name
+    ORDER BY prj.created_at DESC
   `;
 
   return await ProjectModel.sequelize.query(query, {
@@ -122,11 +136,29 @@ const get = async (req) => {
     raw: true,
   });
 };
+
 const getById = async (req, id) => {
-  return await ProjectModel.findOne({
-    where: {
-      id: req?.params?.id || id,
-    },
+  let query = `
+  SELECT
+      prj.*,
+      COUNT(pt.id)::integer as team_members,
+      org.organisation_name
+    FROM ${constants.models.PROJECT_TABLE} prj
+    LEFT JOIN ${
+      constants.models.PROJECT_TEAM_TABLE
+    } pt ON pt.project_id = prj.id
+    LEFT JOIN ${
+      constants.models.ORGANISATION_TABLE
+    } org ON org.id = prj.organisation_id
+    WHERE
+      prj.id = '${req.params.id || id}'
+    GROUP BY
+      prj.id,
+      org.organisation_name
+  `;
+
+  return await ProjectModel.sequelize.query(query, {
+    type: QueryTypes.SELECT,
     raw: true,
   });
 };
